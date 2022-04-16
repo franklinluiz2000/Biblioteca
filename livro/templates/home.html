@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block "conteudo" %}
+
+    <div class="container">
+        <div class="row">
+                
+        
+
+        {% for livro in livros  %}
+            <div class="col-md">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{livro.nome}}</h5>
+                        {% comment %} <h6 class="card-subtitle mb-2 text-muted">{{livro.autor}}</h6>
+                        <h6 class="card-subtitle mb-2 text-muted">Data cadastro:{{livro.data_cadastro}}</h6>
+                        <p class="card-text">{{livro.categoria}}</p> {% endcomment %}
+                        <h6 style="display:inline;" class="card-subtitle mb-2 text-muted">livro emprestado</h6>
+                        {% if livro.emprestado  %}
+                            <svg style="color: green; display:inline;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-check-lg" viewBox="0 0 16 16">
+                                <path d="M12.736 3.97a.733.733 0 0 1 1.047 0c.286.289.29.756.01 1.05L7.88 12.01a.733.733 0 0 1-1.065.02L3.217 8.384a.757.757 0 0 1 0-1.06.733.733 0 0 1 1.047 0l3.052 3.093 5.4-6.425a.247.247 0 0 1 .02-.022Z"/>
+                            </svg>
+                            
+                        {% else %}
+                            <svg style="color: red; display:inline;" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-lg" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M13.854 2.146a.5.5 0 0 1 0 .708l-11 11a.5.5 0 0 1-.708-.708l11-11a.5.5 0 0 1 .708 0Z"/>
+                                <path fill-rule="evenodd" d="M2.146 2.146a.5.5 0 0 0 0 .708l11 11a.5.5 0 0 0 .708-.708l-11-11a.5.5 0 0 0-.708 0Z"/>
+                            </svg>
+                        {% endif %}
+                        <br>
+                        <br>
+                        <a href={% url 'ver_livro' livro.id %} class="btn btn-info">Acessar</a>
+                    </div>
+                </div>                
+            </div>            
+    
+        {% endfor %}
+
+
+
+        </div>
+    </div>
+{% endblock  %}
