@@ -1,7 +1,7 @@
-from email.policy import default
-import imp
-from django.db import models
+from django.db import models    
 from datetime import date
+import datetime
+from django.db.models.base import Model
 from usuario.models import Usuario
 
 class Categoria(models.Model):
@@ -33,11 +33,18 @@ class Livro(models.Model):
 
 
 class Emprestimos(models.Model):
+    choices = (
+        ('P', 'Péssimo'),
+        ('R', 'Ruim'),
+        ('B', 'Bom'),
+        ('O', 'Ótimo')
+    )
     nome_emprestado = models.ForeignKey(Usuario, on_delete=models.DO_NOTHING, blank = True, null = True)
     nome_emprestado_anonimo = models.CharField(max_length = 30, blank = True, null = True)
-    data_emprestimo = models.DateField(blank = True, null = True)
-    data_devolucao = models.DateField(blank = True, null = True)    
+    data_emprestimo = models.DateTimeField(default=datetime.datetime.now())
+    data_devolucao = models.DateTimeField(blank = True, null = True)  
     livro = models.ForeignKey(Livro, on_delete=models.DO_NOTHING)
+    avaliacao = models.CharField(max_length=1, choices=choices, null=True, blank=True)
 
     def __str__(self)->str:
         return f"{self.nome_emprestado} | {self.livro}"
