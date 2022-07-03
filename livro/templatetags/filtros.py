@@ -1,7 +1,16 @@
 from django import template
+from datetime import date, datetime
 
 register = template.Library()
 
 @register.filter
-def mostra_duracao(dataDevolucao, dataEmprestimo):
-    return (dataDevolucao - dataEmprestimo).days
+def mostra_duracao(value1, value2):
+    if all((isinstance(value1, datetime), isinstance(value2, datetime))):
+        dias = (value1 - value2).days
+        texto = 'Dias'
+        if dias == 1:
+            texto = 'Dia'
+
+        return f"{dias} {texto}."
+    
+    return "Ainda não foi devolvido."

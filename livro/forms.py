@@ -1,6 +1,6 @@
 from django import forms
 from django.db.models import fields
-from .models import Livro
+from .models import Livro, Categoria
 from django.db import models
 from datetime import date
 from .models import Categoria
