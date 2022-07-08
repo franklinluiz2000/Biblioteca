@@ -37,7 +37,7 @@ def home(request):
         return redirect("/auth/login/?status=2")
 
 
-def ver_livros(request, id):
+def ver_livro(request, id):
      # um condicional para se permitir que o usuario cadastrado 
     if request.session.get('usuario'):
         # capturo o id do lirvo
@@ -169,11 +169,15 @@ def processa_avaliacao(request):
     id_emprestimo = request.POST.get('id_emprestimo')
     opcoes = request.POST.get('opcoes')
     id_livro = request.POST.get('id_livro')
+        
     #TODO: Verificar segurança
     #TODO: Não permitir avaliação de livro nao devolvido
     #TODO: Colocar as estrelas
     emprestimo = Emprestimos.objects.get(id = id_emprestimo)
-    emprestimo.avaliacao = opcoes
-    emprestimo.save()
-    return redirect(f'/livro/ver_livro/{id_livro}')
+    if emprestimo.livro.usuario_id == request.session['usuario']:
+        emprestimo.avaliacao = opcoes
+        emprestimo.save()
+        return redirect(f'/livro/ver_livro/{id_livro}')
+    else:
+        return HttpResponse("Este empréstimo não é seu!")
     
